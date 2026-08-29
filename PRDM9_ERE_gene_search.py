@@ -1,4 +1,5 @@
 # Search for PRDM9 & ERE genes in HOMER output
+## CONCLUSION: no significant results
 
 import os
 import re

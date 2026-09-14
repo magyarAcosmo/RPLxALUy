@@ -1,14 +1,7 @@
 # ============================================================================
 # Figure 3b: CpG methylation across the AluY consensus
 # ============================================================================
-#
-# INCOMPLETE: this figure's code depends on a data frame called `df_long`
-# (with columns Position, Group, Donor_Mean, Donor_LQ, Donor_HQ), but the
-# pre-figure prep script that builds df_long was not found in either
-# figures_woAge.R or pre_figure.R. Please locate/supply that prep code
-# (likely a separate script that summarizes per-CpG methylation by group),
-# and it can be inserted above the plotting code below.
-#
+# df_long = 3a_methylation_by_position_in_AluY.csv
 # ----------------------------------------------------------------------------
 # FIGURE 3b PLOTTING CODE -- requires df_long
 # ----------------------------------------------------------------------------

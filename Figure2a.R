@@ -2,16 +2,15 @@
 # Figure 2b: Volcano plot (methylation difference vs. -log10 p-value)
 # ============================================================================
 # hyper = red (#D7191C), hypo = blue (#2C7BB6)
-
 # ----------------------------------------------------------------------------
-# PRE-FIGURE PREP (from pre_figure.R)
+# PRE-FIGURE
 # Produces: dmrs_2026-01-17_woAGE_effect.bed
 # NOTE: this figure also reads DMRs_wAGE/dmrs_2026-01-17_pval.bed directly --
-# that file is a raw input, not something pre_figure.R generates.
+# that file is a raw input, not something previously generates.
 # ----------------------------------------------------------------------------
 
 # DMR EFFECT
-## match up noAGE DMRs with AGE DMRs in dmrs_2026-01-17_effect.bed
+## match up woAGE DMRs with AGE DMRs in dmrs_2026-01-17_effect.bed
 library(GenomicRanges)
 library(rtracklayer)
 library(ggplot2)
@@ -25,8 +24,6 @@ effect <- read.delim("DMRs_wAGE/dmrs_2026-01-17_effect.bed", header = FALSE,
                      col.names = c("chr", "start", "end", "x_counter", "effect_value", "strand"))
 
 # convert to GRanges
-# bed files are 0-based half-open; GRanges is 1-based inclusive, so add 1 to start
-
 gr_woAGE <- GRanges(seqnames = woAGE$chr,
                     ranges = IRanges(start = woAGE$start + 1, end = woAGE$end))
 gr_effect <- GRanges(seqnames = effect$chr,

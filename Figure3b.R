@@ -4,9 +4,8 @@
 # ============================================================================
 # Control: #2C7BB6
 # Patients: #D7191C
-
 # ----------------------------------------------------------------------------
-# PRE-FIGURE PREP (from pre_figure.R)
+# PRE-FIGURE PREP
 # Produces: dmrs_2026-01-17_woAGE_effect.bed, AluY_elements_annot.txt
 # ----------------------------------------------------------------------------
 
@@ -23,8 +22,6 @@ effect <- read.delim("DMRs_wAGE/dmrs_2026-01-17_effect.bed", header = FALSE,
                      col.names = c("chr", "start", "end", "x_counter", "effect_value", "strand"))
 
 # convert to GRanges
-# bed files are 0-based half-open; GRanges is 1-based inclusive, so add 1 to start
-
 gr_woAGE <- GRanges(seqnames = woAGE$chr,
                     ranges = IRanges(start = woAGE$start + 1, end = woAGE$end))
 gr_effect <- GRanges(seqnames = effect$chr,

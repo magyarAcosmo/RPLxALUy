@@ -2,11 +2,9 @@
 # Figure 3c: Length concordance chart
 # (DMR length vs. length of its overlapping AluY element)
 # ============================================================================
-# Control: #2C7BB6
-# Patients: #D7191C
 
 # ----------------------------------------------------------------------------
-# PRE-FIGURE PREP (from pre_figure.R)
+# PRE-FIGURE PREP
 # Produces: dmrs_2026-01-17_woAGE_effect.bed, AluY_elements_annot.txt
 # ----------------------------------------------------------------------------
 
@@ -31,7 +29,7 @@ gr_effect <- GRanges(seqnames = effect$chr,
                      effect_value = effect$effect_value)
 
 # Find overlaps: for each woAGE DMR, find matching effect DMR
-hits <- findOverlaps(gr_woAGE, gr_effect, type = "equal")   # exact coordinate match
+hits <- findOverlaps(gr_woAGE, gr_effect, type = "equal")
 
 # Build Output
 df_out <- woAGE[queryHits(hits), ]
@@ -41,36 +39,26 @@ df_out$effect_value <- effect$effect_value[subjectHits(hits)]
 cat("woAGE DMRs:", nrow(woAGE), "\n")
 cat("Matched DMRs:", nrow(df_out), "\n")
 
-# write output file
 write.table(df_out,
             file = "dmrs_2026-01-17_woAGE_effect.bed",
             sep = "\t",
             quote = FALSE,
             row.names = FALSE,
             col.names = FALSE)
-######
-#  Results: all 294 woAGE DMRs matched!
-######
 
 # AluY coordinates
-## rmsk.txt.gz contains all AluY coordinates
-## include all subfamilies that start with AluY (many subfamilies will be included)
+## rmsk.txt.gz contains all AluY coordinates; include all subfamilies that start with AluY
 
 # read rmsk.txt file
 rmsk <- read.delim("rmsk.txt", header = FALSE)
 
-# quick check on column 11 to make sure family is present -- looks good!
-head(rmsk[, 11], 10)
-
 # filter: repName (col 11) starts with "AluY"
 aluY <- rmsk[grepl("^AluY", rmsk[, 11]), ]
 
-# check what subfamilies were included
 table(aluY[, 11])   # 28 subfamilies
 
-cat("Total AluY elements found:", nrow(aluY), "\n")   #151627
+cat("Total AluY elements found:", nrow(aluY), "\n")   # 151627
 
-# write output
 write.table(aluY,
             file = "rmsk_AluY.txt",
             sep = "\t",
@@ -94,17 +82,12 @@ head(aluY_clean, 5)
 head(aluY_clean$repLeft, 5)
 
 # Normalize consensus coordinates by strand
-## + strand: true footprint = reStart -> repEnd
-## - strand: true footprint = repLeft -> repEnd
 ## UCSC reference: https://genome.ucsc.edu/cgi-bin/hgTables?db=hg38&hgta_group=rep&hgta_track=rmsk&hgta_table=rmsk&hgta_doSchema=describe+table+schema
-
 aluY_clean$consensus_start <- ifelse(aluY_clean$strand == "+", aluY_clean$repStart, aluY_clean$repLeft)
 aluY_clean$consensus_end <- aluY_clean$repEnd   # always the middle/true end coordinate
 
 # check: consensus_start always <= consensus_end
 sum(aluY_clean$consensus_start > aluY_clean$consensus_end)
-
-### Establish a sensible minimum AluY element length to exlude other very short/low-quality fragments? (anything under 50bp?)
 
 head(aluY_clean[, c("chr", "start", "end", "strand", "repStart", "repEnd", "repLeft",
                     "consensus_start", "consensus_end")], 5)
@@ -115,11 +98,6 @@ write.table(aluY_clean,
             quote = FALSE,
             row.names = FALSE,
 
-# ----------------------------------------------------------------------------
-# SHARED DATA PREP (from figures_woAge.R, Figure 3d section)
-# Figure 3c reuses the DMR/AluY overlap mapping (gr_dmrs, gr_alu, hits)
-# built for Figure 3d.
-# ----------------------------------------------------------------------------
 
 # Read DMR file
 dmrs <- read.delim("dmrs_2026-01-17_woAGE_effect.bed", header = FALSE,
@@ -137,13 +115,13 @@ aluY_clean$consensus_end   <- aluY_clean$repEnd
 
 # swap instead of drop, for the 2 previously-excluded fragments
 swap_idx <- aluY_clean$consensus_start > aluY_clean$consensus_end
-sum(swap_idx)  # should be 2 -- yes
+sum(swap_idx)  # 2
 
 tmp <- aluY_clean$consensus_start[swap_idx]
 aluY_clean$consensus_start[swap_idx] <- aluY_clean$consensus_end[swap_idx]
 aluY_clean$consensus_end[swap_idx]   <- tmp
 
-sum(aluY_clean$consensus_start > aluY_clean$consensus_end)  # should be 0 -- yes
+sum(aluY_clean$consensus_start > aluY_clean$consensus_end)  # 0
 
 # build AluY GRanges
 gr_alu <- GRanges(seqnames = aluY_clean$chr,
@@ -160,13 +138,6 @@ hits <- findOverlaps(gr_dmrs, gr_alu, type = "any")
 # FIGURE 3c CODE
 # ----------------------------------------------------------------------------
 
-# -----------------------------------------------------------------------------------
-# Figure 3c: Length concordance chart – DMR length and its overlapping AluY length
-## df: one row per DMR-AluY overlap pair w/ full length of each DMR & full length of AluY element (not just overlap/intersection region)
-## reuse some data processing from Figure 3d
-
-# build df for Figure 3c
-# same 176 pairs as figure 3d
 df <- data.frame(
   DMR_length = width(gr_dmrs)[queryHits(hits)],
   Alu_length = width(gr_alu)[queryHits(hits)]
@@ -178,9 +149,6 @@ nrow(df)  # 176
 med_dmr <- median(df$DMR_length)
 med_alu <- median(df$Alu_length)
 
-med_dmr #407
-med_alu #300
-
 ggplot(df) +
 
   geom_segment(aes(x = 1, xend = 2,
@@ -191,7 +159,7 @@ ggplot(df) +
   geom_point(aes(x = 2, y = Alu_length),
              color = "#5c3a21", size = 2) +
 
-  # THICK MEDIAN LINES (FIXED)
+  # THICK MEDIAN LINES
   geom_hline(yintercept = med_dmr,
              linetype = "dashed",
              color = "#d2b48c",
@@ -202,14 +170,11 @@ ggplot(df) +
              linewidth = 2) +
   scale_x_continuous(breaks = c(1,2),
                      labels = c("DMR length", "AluY length")) +
-  labs(
-    y = "DMR length"
-  )+
+  labs(y = "DMR length")+
   scale_y_continuous(breaks = seq(0, max(df$DMR_length, df$Alu_length), 300)) +
   theme_classic()+
   theme(
     axis.text = element_text(size = 12),
     axis.title = element_text(size = 12),
-    axis.title.x = element_blank(),
-
+    axis.title.x = element_blank()
   )

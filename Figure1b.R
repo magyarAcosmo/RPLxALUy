@@ -1,14 +1,8 @@
 # ============================================================================
 # Figure 1b: Read coverage per site (Control vs. uRPL)
 # ============================================================================
-#
-# INCOMPLETE: this figure's code depends on a data frame called `df_plot`
-# (with columns group ["Control"/"uRPL"] and reads), but the pre-figure prep
-# script that builds df_plot was not found in either figures_woAge.R or
-# pre_figure.R. Please locate/supply that prep code (likely reading a
-# coverage/reads-per-site file and reshaping it by group), and it can be
-# inserted above the plotting code below.
-#
+# Control: #2C7BB6
+# Patients: #D7191C
 # ----------------------------------------------------------------------------
 # FIGURE 1b PLOTTING CODE -- requires df_plot
 # ----------------------------------------------------------------------------

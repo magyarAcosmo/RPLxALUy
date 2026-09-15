@@ -4,7 +4,7 @@
 # Control: #2C7BB6
 # Patients: #D7191C
 # ----------------------------------------------------------------------------
-# FIGURE 1b PLOTTING CODE -- requires df_plot
+# FIGURE 1b PLOTTING CODE -- requires df2
 # ----------------------------------------------------------------------------
 
 library(ggplot2)

@@ -4,8 +4,7 @@
 # Control: #2C7BB6
 # Patients: #D7191C
 # ----------------------------------------------------------------------------
-# PRE-FIGURE PREP
-# Produces: dmrs_2026-01-17_woAGE_effect.bed, AluY_elements_annot.txt
+# PRE-FIGURE PREP - requires df
 # ----------------------------------------------------------------------------
 
 

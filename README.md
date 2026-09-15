@@ -26,9 +26,9 @@ files.
 | Figure2a.R | Volcano plot (methylation difference vs -log10 p-value)     |
 | Figure2b.R | Methylation PCA at DMRs                                     |                     
 | Figure2c.R | DMR Classification                                          |                     
-| Figure3a.R | CpG methylation across the AluY consensus                   |                     
-| Figure3b.R | CpG methylation across AluY consensus                       |                     
-| Figure3c.R | DMR length vs overlapping AluY length                       |                     
+| Figure3a.R | Mean DNA methylation across CpG positions (Control vs uRPL) |                     
+| Figure3b.R | DMR coverage across AluY consensus sequence                 |                     
+| Figure3c.R | DMR and overlapping AluY length concordance                 |                     
 | Figure3d.R |                                                             |                     
 | Figure4a.R |                                                             |                     
 | Figure4b.R | GO developmental genes                                      |                     

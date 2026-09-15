@@ -48,9 +48,6 @@ write.table(df_out,
             quote = FALSE,
             row.names = FALSE,
             col.names = FALSE)
-######
-#  Results: all 294 woAGE DMRs matched!
-######
 
 # ----------------------------------------------------------------------------
 # FIGURE 2b CODE

@@ -2,8 +2,7 @@
 # Figure 3d: DMR coverage across the AluY consensus sequence
 # (colored by number of overlapping AluY elements per DMR)
 # ============================================================================
-# Control: #2C7BB6
-# Patients: #D7191C
+
 # ----------------------------------------------------------------------------
 # PRE-FIGURE PREP
 # Produces: dmrs_2026-01-17_woAGE_effect.bed, AluY_elements_annot.txt
@@ -52,13 +51,10 @@ write.table(df_out,
 
 # AluY coordinates
 ## rmsk.txt.gz contains all AluY coordinates
-## include all subfamilies that start with AluY (many subfamilies will be included)
+## include all subfamilies that start with AluY
 
 # read rmsk.txt file
 rmsk <- read.delim("rmsk.txt", header = FALSE)
-
-# quick check on column 11 to make sure family is present -- looks good!
-head(rmsk[, 11], 10)
 
 # filter: repName (col 11) starts with "AluY"
 aluY <- rmsk[grepl("^AluY", rmsk[, 11]), ]
@@ -68,7 +64,6 @@ table(aluY[, 11])   # 28 subfamilies
 
 cat("Total AluY elements found:", nrow(aluY), "\n")   #151627
 
-# write output
 write.table(aluY,
             file = "rmsk_AluY.txt",
             sep = "\t",
@@ -92,17 +87,12 @@ head(aluY_clean, 5)
 head(aluY_clean$repLeft, 5)
 
 # Normalize consensus coordinates by strand
-## + strand: true footprint = reStart -> repEnd
-## - strand: true footprint = repLeft -> repEnd
 ## UCSC reference: https://genome.ucsc.edu/cgi-bin/hgTables?db=hg38&hgta_group=rep&hgta_track=rmsk&hgta_table=rmsk&hgta_doSchema=describe+table+schema
-
 aluY_clean$consensus_start <- ifelse(aluY_clean$strand == "+", aluY_clean$repStart, aluY_clean$repLeft)
 aluY_clean$consensus_end <- aluY_clean$repEnd   # always the middle/true end coordinate
 
 # check: consensus_start always <= consensus_end
 sum(aluY_clean$consensus_start > aluY_clean$consensus_end)
-
-### Establish a sensible minimum AluY element length to exlude other very short/low-quality fragments? (anything under 50bp?)
 
 head(aluY_clean[, c("chr", "start", "end", "strand", "repStart", "repEnd", "repLeft",
                     "consensus_start", "consensus_end")], 5)
@@ -117,7 +107,6 @@ write.table(aluY_clean,
 # FIGURE 3d CODE
 # ----------------------------------------------------------------------------
 
-# new processing to show DMRs that overlap with multiple AluY elements
 library(ggplot2)
 library(GenomicRanges)
 
@@ -136,14 +125,14 @@ aluY_clean$consensus_end   <- aluY_clean$repEnd
 
 # swap instead of drop, for the 2 previously-excluded fragments
 swap_idx <- aluY_clean$consensus_start > aluY_clean$consensus_end
-sum(swap_idx)  # should be 2 -- yes
+sum(swap_idx)  # 2
 
 tmp <- aluY_clean$consensus_start[swap_idx]
 aluY_clean$consensus_start[swap_idx] <- aluY_clean$consensus_end[swap_idx]
 aluY_clean$consensus_end[swap_idx]   <- tmp
 
-nrow(aluY_clean)                                            # should be 151627 -- yes
-sum(aluY_clean$consensus_start > aluY_clean$consensus_end)  # should be 0 -- yes
+nrow(aluY_clean)                                            # 151627
+sum(aluY_clean$consensus_start > aluY_clean$consensus_end)  # 0
 
 # build AluY GRanges
 gr_alu <- GRanges(seqnames = aluY_clean$chr,
@@ -176,14 +165,14 @@ df_map <- data.frame(
   dmr_end   = end(gr_dmrs)[queryHits(hits)]
 )
 
-cat("Total overlap rows:", nrow(df_map), "\n") #176
+cat("Total overlap rows:", nrow(df_map), "\n") # 176
 
 # count AluY overlaps per DMR
 df_map$dmr_id <- paste(df_map$dmr_chr, df_map$dmr_start, df_map$dmr_end, sep = "_")
 dmr_counts <- table(df_map$dmr_id)
 df_map$overlap_count <- as.integer(dmr_counts[df_map$dmr_id])
 
-table(dmr_counts)  # check: should show the 1 / 2 / 3 breakdown -- yes, 18 overlapping
+table(dmr_counts)  # shows 1 / 2 / 3 breakdown (18 overlapping)
 
 df_map$overlap_count <- factor(df_map$overlap_count, levels = c(1, 2, 3))
 

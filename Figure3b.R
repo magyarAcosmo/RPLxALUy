@@ -1,5 +1,5 @@
 # ============================================================================
-# Figure 3d: DMR coverage across the AluY consensus sequence
+# Figure 3b: DMR coverage across the AluY consensus sequence
 # (colored by number of overlapping AluY elements per DMR)
 # ============================================================================
 
@@ -28,7 +28,7 @@ gr_effect <- GRanges(seqnames = effect$chr,
                      effect_value = effect$effect_value)
 
 # Find overlaps: for each woAGE DMR, find matching effect DMR
-hits <- findOverlaps(gr_woAGE, gr_effect, type = "equal")   # exact coordinate match
+hits <- findOverlaps(gr_woAGE, gr_effect, type = "equal")
 
 # Build Output
 df_out <- woAGE[queryHits(hits), ]
@@ -45,13 +45,9 @@ write.table(df_out,
             quote = FALSE,
             row.names = FALSE,
             col.names = FALSE)
-######
-#  Results: all 294 woAGE DMRs matched!
-######
 
 # AluY coordinates
-## rmsk.txt.gz contains all AluY coordinates
-## include all subfamilies that start with AluY
+## rmsk.txt.gz contains all AluY coordinates; include all subfamilies that start with AluY
 
 # read rmsk.txt file
 rmsk <- read.delim("rmsk.txt", header = FALSE)
@@ -104,11 +100,10 @@ write.table(aluY_clean,
             row.names = FALSE,
 
 # ----------------------------------------------------------------------------
-# FIGURE 3d CODE
+# FIGURE 3b CODE
 # ----------------------------------------------------------------------------
 
 library(ggplot2)
-library(GenomicRanges)
 
 # Read DMR file
 dmrs <- read.delim("dmrs_2026-01-17_woAGE_effect.bed", header = FALSE,

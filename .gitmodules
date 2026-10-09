@@ -1,0 +1,6 @@
+[submodule "tools/tools/dnm-tools"]
+	path = tools/tools/dnm-tools
+	url = https://github.com/smithlabcode/dnmtools.git
+[submodule "tools/tools/dorado"]
+	path = tools/tools/dorado
+	url = https://github.com/nanoporetech/dorado.git

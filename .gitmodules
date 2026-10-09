@@ -4,3 +4,6 @@
 [submodule "tools/tools/dorado"]
 	path = tools/tools/dorado
 	url = https://github.com/nanoporetech/dorado.git
+[submodule "tools/modkit"]
+	path = tools/modkit
+	url = https://github.com/nanoporetech/modkit.git

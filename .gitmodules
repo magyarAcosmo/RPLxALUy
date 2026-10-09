@@ -1,8 +1,8 @@
 [submodule "tools/tools/dnm-tools"]
-	path = tools/tools/dnm-tools
+	path = tools/dnm
 	url = https://github.com/smithlabcode/dnmtools.git
 [submodule "tools/tools/dorado"]
-	path = tools/tools/dorado
+	path = tools/dorado
 	url = https://github.com/nanoporetech/dorado.git
 [submodule "tools/modkit"]
 	path = tools/modkit

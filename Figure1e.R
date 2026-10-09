@@ -5,6 +5,9 @@
 # Patients: #D7191C
 # ----------------------------------------------------------------------------
 # PRE-FIGURE PREP - requires df
+## Andrew Smith has this hardcoded data?
+## take mod % form each pileup
+## Jordan will send math, plug in those values for the hardcoded values in code
 # ----------------------------------------------------------------------------
 
 

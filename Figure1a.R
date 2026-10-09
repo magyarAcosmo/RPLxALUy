@@ -5,6 +5,7 @@
 # Patients: #D7191C
 # ----------------------------------------------------------------------------
 # FIGURE 1b PLOTTING CODE -- requires df2
+## Andrew Smith has this hardcoded data?
 # ----------------------------------------------------------------------------
 
 library(ggplot2)

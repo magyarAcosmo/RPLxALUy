@@ -5,6 +5,8 @@
 # Patients: #D7191C
 # ----------------------------------------------------------------------------
 # FIGURE 1b PLOTTING CODE -- requires df_plot
+## Andrew Smith has this hardcoded data?
+## data in pileups that Jordan has
 # ----------------------------------------------------------------------------
 
 library(ggplot2)

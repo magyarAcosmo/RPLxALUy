@@ -1,9 +1,21 @@
 # RPLxALUy
-Code used to generate results of manuscript
+Code used to generate results of manuscript.
 
 Each FigureX.R script is self-contained: it includes the pre-figure data prep steps
 and the plotting code for that figure. Run any single script top-to-bottom to reproduce
 that figure from the input files.
+
+### tools/
+This folder holds third-party software used by this project. Each tool is included as a **git submodule**,
+so this repo stores only a pointer to a specific commit of the tool's own repository rather than a copy of its code.
+
+#### Contents
+| Folder    | Upstream repo                                | Version | Purpose                                                                       |
+|-----------|----------------------------------------------|---------|-------------------------------------------------------------------------------|
+| `dnm/`    | https://github.com/smithlabcode/dnmtools.git | v1.5.1  | High-throughput analysis of DNA methylation data                              |
+| `dorado/` | https://github.com/nanoporetech/dorado       | v1.1.1  | Oxford Nanopore (converts raw signal to reads with modification-base calling) |
+| `modkit/` | https://github.com/nanoporetech/modkit       | v0.5.0  | Nanopore tool for summarizing and analyzing base modifications from BAM files |
+
 
 ### Script redundancy
 Several figures use the same upstream prep steps (e.g. matching without age (woAGE) DMRs
